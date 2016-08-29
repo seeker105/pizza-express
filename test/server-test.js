@@ -1,7 +1,6 @@
 const assert = require('assert');
 const request = require('request');
 const app = require('../server');
-
 const fixtures = require('./fixtures');
 
 describe('Server', () => {
@@ -28,7 +27,6 @@ describe('Server', () => {
   });
 
   describe('GET /', () => {
-
     it('should return a 200', (done) => {
       this.request.get('/', (error, response) => {
         if (error) { done(error); }
@@ -43,7 +41,7 @@ describe('Server', () => {
       this.request.get('/', (error, response) => {
         if (error) { done(error); }
         assert(response.body.includes(title),
-               `"${response.body}" does not include "${title}".`);
+        `"${response.body}" does not include "${title}".`);
         done();
       });
     });
@@ -51,20 +49,11 @@ describe('Server', () => {
   });
 
   describe('POST /pizzas', () => {
-
     beforeEach(() => {
       app.locals.pizzas = {};
     });
 
-    it('should not return 404', (done) => {
-      this.request.post('/pizzas', (error, response) => {
-        if (error) { done(error); }
-        assert.notEqual(response.statusCode, 404);
-        done();
-      });
-    });
-
-    it('should receive and restore data', (done) => {
+    it('should receive and store data', (done) => {
       var payload = { pizza: fixtures.validPizza };
 
       this.request.post('/pizzas', { form: payload }, (error, response) => {
@@ -78,17 +67,13 @@ describe('Server', () => {
       });
     });
 
-    it('should redirect the user to their new pizza', (done) => {
-      var payload = { pizza: fixtures.validPizza };
-
-      this.request.post('/pizzas', { form: payload }, (error, response) => {
+    it('should not return 404', (done) => {
+      this.request.post('/pizzas', (error, response) => {
         if (error) { done(error); }
-        var newPizzaId = Object.keys(app.locals.pizzas)[0];
-        assert.equal(response.headers.location, '/pizzas/' + newPizzaId);
+        assert.notEqual(response.statusCode, 404);
         done();
       });
     });
-
   });
 
   describe('GET /pizzas/:id', () => {
@@ -104,18 +89,30 @@ describe('Server', () => {
         done();
       });
     });
-
     it('should return a page that has the title of the pizza', (done) => {
       var pizza = app.locals.pizzas.testPizza;
 
       this.request.get('/pizzas/testPizza', (error, response) => {
         if (error) { done(error); }
         assert(response.body.includes(pizza.name),
-               `"${response.body}" does not include "${pizza.name}".`);
+        `"${response.body}" does not include "${pizza.name}".`);
+        assert(response.body.includes(`mushrooms`));
+        assert(response.body.includes(`onions`));
+        assert(response.body.includes(`garlic`));
+        assert(response.body.includes(`black olives`));
+        done();
+      });
+    });
+    it('should redirect the user to their new pizza', (done) => {
+      var payload = { pizza: fixtures.validPizza };
+
+      this.request.post('/pizzas', { form: payload }, (error, response) => {
+        if (error) { done(error); }
+        var newPizzaId = Object.keys(app.locals.pizzas)[1];
+        assert.equal(response.headers.location, '/pizzas/' + newPizzaId);
         done();
       });
     });
 
-  });
-
-});
+  });  //describe "GET /pizzas/:id"
+});  //describe "Server  "
