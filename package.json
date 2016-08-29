@@ -1,0 +1,39 @@
+{
+  "name": "pizza-express",
+  "version": "1.0.0",
+  "description": "A place to admire pizzas",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turingschool-examples/pizza-express.git"
+  },
+  "keywords": [
+    "express",
+    "pizza",
+    "yum",
+    "cassarole"
+  ],
+  "author": "Steve Kinney",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/turingschool-examples/pizza-express/issues"
+  },
+  "homepage": "https://github.com/turingschool-examples/pizza-express#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "express-handlebars": "^2.0.1",
+    "hbs": "^4.0.0",
+    "pryjs": "^0.1.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "request": "^2.65.0"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
